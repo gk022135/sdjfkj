@@ -1,0 +1,43 @@
+from sklearn.datasets import load_iris
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+# Load data
+data = load_iris()
+X = data.data
+y = data.target
+
+# Standardize the features
+X_std = StandardScaler().fit_transform(X)
+
+# Apply PCA
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_std)
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', edgecolor='k')
+plt.title("PCA - Reduced to 2D")
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.grid(True)
+plt.show()
+
+
+
+
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+
+# Apply LDA (number of components must be <= classes - 1)
+lda = LDA(n_components=2)
+X_lda = lda.fit_transform(X, y)
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.scatter(X_lda[:, 0], X_lda[:, 1], c=y, cmap='rainbow', edgecolor='k')
+plt.title("LDA - Reduced to 2D")
+plt.xlabel("Linear Discriminant 1")
+plt.ylabel("Linear Discriminant 2")
+plt.grid(True)
+plt.show()
